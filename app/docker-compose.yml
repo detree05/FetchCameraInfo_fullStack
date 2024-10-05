@@ -1,0 +1,14 @@
+services:
+  fci-frontend:
+    container_name: fci-frontend
+    image: "gitlab.neverservers.ru:5050/root/fci/fci-frontend:latest"
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+
+  fci-backend:
+    container_name: fci-backend
+    image: "gitlab.neverservers.ru:5050/root/fci/fci-backend:latest"
+    restart: unless-stopped
+    ports:
+      - "8888:8888"

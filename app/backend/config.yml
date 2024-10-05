@@ -1,0 +1,9 @@
+server:
+  port: 8888
+corspolicy:
+  allow: "*"
+database:
+  username: "opensuse"
+  password: "opensuse"
+  address: 172.16.0.57
+  port: 3306
