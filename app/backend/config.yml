@@ -1,0 +1,10 @@
+server:
+  verbose: false # logging level
+  port: 8888
+corspolicy:
+  allow: "*" # or "http://skibidi.toilet" . its either wildcard either full url
+database:
+  username: "skibidi"
+  password: "toilet"
+  address: 172.16.0.1
+  port: 3306

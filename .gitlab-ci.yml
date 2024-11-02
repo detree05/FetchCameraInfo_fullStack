@@ -1,0 +1,32 @@
+stages:
+  - build
+  - push
+
+docker_build_backend:
+  stage: build
+  script:
+    - docker build -t gitlab.neverservers.ru:5050/root/fci/fci-backend:latest app/backend
+  rules:
+    - if: '$CI_COMMIT_REF_NAME != "main" && $CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "merge_request_event"'
+  tags:
+    - build
+
+docker_build_frontend:
+  stage: build
+  script:
+    - docker build -t gitlab.neverservers.ru:5050/root/fci/fci-frontend:latest app/frontend
+  rules:
+    - if: '$CI_COMMIT_REF_NAME != "main" && $CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "merge_request_event"'
+  tags:
+    - build
+
+push_into_registry:
+  stage: push
+  script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
+    - docker push gitlab.neverservers.ru:5050/root/fci/fci-backend:latest
+    - docker push gitlab.neverservers.ru:5050/root/fci/fci-frontend:latest
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "main"'
+  tags:
+    - build
